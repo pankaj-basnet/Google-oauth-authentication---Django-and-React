@@ -36,6 +36,66 @@ To replicate this environment locally, execute the following steps to ensure dat
 
 ---
 
+### Details on Django setup
+
+The workflow for installing the necessary authentication dependencies and applying database migrations.
+
+---
+
+#### 🛠️ Project Setup: Dependency Installation
+
+Follow these steps to set up the virtual environment and install the required packages.
+
+#### 1. Virtual Environment Initialization
+First, create and activate a dedicated virtual environment to keep your project dependencies isolated.
+
+```bash
+# Navigate to the project folder
+cd 'apr3-/wger_prac_oauth2'
+
+# Create the virtual environment
+python -m venv venv0403
+
+# Activate the virtual environment (Git Bash/Linux)
+source 'venv0403/Scripts/activate'
+
+### 2. Package Installation
+Install the necessary Django packages for REST framework, CORS, and social authentication.
+
+```bash
+# Install core authentication and API packages
+pip install dj-rest-auth
+pip install djangorestframework-simplejwt
+pip install django-cors-headers
+
+# Install django-allauth with the specific social account extension
+pip install "django-allauth[socialaccount]"
+```
+
+### 2. Middleware Configuration & Migrations
+
+1. Ensure `allauth.account.middleware.AccountMiddleware` is added to your `MIDDLEWARE` list in `settings.py`.
+2. Once the settings are updated, apply the database schema changes:
+
+```bash
+# Apply migrations to generate the auth tables
+python manage.py migrate
+```
+*Expected Output: You should see a series of `Applying... OK` messages for `account`, `admin`, `auth`, `authtoken`, `sessions`, and `socialaccount`.*
+
+### 3. Running the Server
+
+```bash
+python manage.py setup_google_auth --id "<YOUR_CLIENT_ID>" --secret "<YOUR_CLIENT_SECRET>"
+```
+
+```bash
+# Start the development server
+python manage.py runserver
+```
+
+---
+
 ## **3. Backend Infrastructure: Requirements & Configurations (Django)**
 
 ### **Core Package Dependencies**
